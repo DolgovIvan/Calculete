@@ -2,8 +2,12 @@ package com.dolgov.calculate;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.DeadObjectException;
 import android.view.View;
@@ -16,6 +20,8 @@ import java.text.DecimalFormat;
 
 public class MainActivity<e> extends AppCompatActivity {
 
+    public static final String PREFERENCES = "nightPreferences";
+    public static final String KEY_THEME = "night";
     private static final String INPUT_TEXT_VIEW = "inputTextView";
     private static final String VALUE_ONE = "valueOne";
     private static final String VALUE_TWO = "valueTwo";
@@ -25,6 +31,7 @@ public class MainActivity<e> extends AppCompatActivity {
     private static final char MULTIPLY = '*';
     private static final char DIVIDE = '/';
     private char ACTION;
+    SharedPreferences sharedPreferences;
 
     private double valueOne = Double.NaN;
     private double valueTwo = Double.NaN;
@@ -32,31 +39,35 @@ public class MainActivity<e> extends AppCompatActivity {
 
     private DecimalFormat decimalFormat;
     private TextView inputTextView;
+    private SwitchCompat theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        decimalFormat = new DecimalFormat("#.##########");
-        inputTextView = findViewById(R.id.inputTextView);
+        sharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
-        Button btn0 = (Button) findViewById(R.id.btn0);
-        Button btn1 = (Button) findViewById(R.id.btn1);
-        Button btn2 = (Button) findViewById(R.id.btn2);
-        Button btn3 = (Button) findViewById(R.id.btn3);
-        Button btn4 = (Button) findViewById(R.id.btn4);
-        Button btn5 = (Button) findViewById(R.id.btn5);
-        Button btn6 = (Button) findViewById(R.id.btn6);
-        Button btn7 = (Button) findViewById(R.id.btn7);
-        Button btn8 = (Button) findViewById(R.id.btn8);
-        Button btn9 = (Button) findViewById(R.id.btn9);
-        Button btnDecima = (Button) findViewById(R.id.btnDecimal);
-        Button btnDivide = (Button) findViewById(R.id.btnDivide);
-        Button btnMyltiply = (Button) findViewById(R.id.btnMultiply);
-        Button btnMinus = (Button) findViewById(R.id.btnMinus);
-        Button btnPlus = (Button) findViewById(R.id.btnPlus);
-        Button btnEquals = (Button) findViewById(R.id.btnEquals);
-        Button btnClear = (Button) findViewById(R.id.btnClear);
+        decimalFormat = new DecimalFormat("#.##########");
+
+        inputTextView = findViewById(R.id.inputTextView);
+        theme = findViewById(R.id.theme);
+        Button btn0 = findViewById(R.id.btn0);
+        Button btn1 = findViewById(R.id.btn1);
+        Button btn2 = findViewById(R.id.btn2);
+        Button btn3 = findViewById(R.id.btn3);
+        Button btn4 = findViewById(R.id.btn4);
+        Button btn5 = findViewById(R.id.btn5);
+        Button btn6 = findViewById(R.id.btn6);
+        Button btn7 = findViewById(R.id.btn7);
+        Button btn8 = findViewById(R.id.btn8);
+        Button btn9 = findViewById(R.id.btn9);
+        Button btnDecima = findViewById(R.id.btnDecimal);
+        Button btnDivide = findViewById(R.id.btnDivide);
+        Button btnMyltiply = findViewById(R.id.btnMultiply);
+        Button btnMinus = findViewById(R.id.btnMinus);
+        Button btnPlus = findViewById(R.id.btnPlus);
+        Button btnEquals = findViewById(R.id.btnEquals);
+        Button btnClear = findViewById(R.id.btnClear);
 
         btn0.setOnClickListener(this::onClick);
         btn1.setOnClickListener(this::onClick);
@@ -75,6 +86,34 @@ public class MainActivity<e> extends AppCompatActivity {
         btnPlus.setOnClickListener(this::onClick);
         btnEquals.setOnClickListener(this::onClick);
         btnClear.setOnClickListener(this::onClick);
+
+        checkNightModeActivated();
+
+        theme.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                saveNightModeState(true);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                saveNightModeState(false);
+            }
+            recreate();
+        });
+    }
+
+    private void saveNightModeState(boolean nightMode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_THEME, nightMode).apply();
+    }
+
+    public void checkNightModeActivated() {
+        if (sharedPreferences.getBoolean(KEY_THEME, false)) {
+            theme.setChecked(true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            theme.setChecked(false);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     @Override
