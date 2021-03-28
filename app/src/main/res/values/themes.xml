@@ -5,7 +5,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/colorAccent</item>
-        <item name="colorSwitchThumbNormal">@color/colorPrimaryDark</item>
+        <item name="colorSurface">@color/colorAccent</item>
+        <item name="colorOnSurface">@color/design_default_color_surface</item>
         <item name="android:windowBackground">@color/colorAccentNight</item>
         <item name="android:textStyle">italic</item>
     </style>
