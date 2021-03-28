@@ -110,9 +110,11 @@ public class MainActivity<e> extends AppCompatActivity {
         if (sharedPreferences.getBoolean(KEY_THEME, false)) {
             theme.setChecked(true);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            theme.setText("Темная тема");
         } else {
             theme.setChecked(false);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            theme.setText("Светлая тема");
         }
     }
 

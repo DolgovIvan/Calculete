@@ -20,6 +20,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMinus"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button_minus"
@@ -31,6 +32,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDecimal"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button_pt"
@@ -42,6 +44,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn1"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button1"
@@ -53,6 +56,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn2"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button2"
@@ -64,6 +68,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn0"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button0"
@@ -75,6 +80,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDivide"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button_divide"
@@ -85,6 +91,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn9"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button9"
@@ -96,6 +103,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn4"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button4"
@@ -107,6 +115,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn6"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button6"
@@ -118,6 +127,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn8"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button8"
@@ -129,6 +139,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnEquals"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button_equal"
@@ -140,6 +151,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn7"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button7"
@@ -151,6 +163,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn3"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button3"
@@ -162,6 +175,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPlus"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button_plus"
@@ -172,6 +186,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn5"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button5"
@@ -183,6 +198,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnMultiply"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/button_multiply"
@@ -193,6 +209,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnClear"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/clear"
@@ -206,9 +223,10 @@
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
         android:text="@string/theme_mode"
-        android:textSize="@dimen/textSizeBtn"
+        android:textSize="@dimen/textSizeSwitch"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/barrierver"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -217,7 +235,7 @@
         android:layout_height="wrap_content"
         app:barrierDirection="top"
         app:constraint_referenced_ids="btn8,btn7,btn6,btn5,btnEquals,btn2,btn9,btn1,btn4,btnDecimal,btn3,btn0"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierver"
