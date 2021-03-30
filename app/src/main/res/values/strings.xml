@@ -16,4 +16,6 @@
     <string name="button_minus">-</string>
     <string name="button_plus">+</string>
     <string name="button_equal">=</string>
+    <string name="clear">C</string>
+    <string name="theme_mode">Светлая тема</string>
 </resources>
