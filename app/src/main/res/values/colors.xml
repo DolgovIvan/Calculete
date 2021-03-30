@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimaryNight">#16202c</color>
     <color name="colorPrimaryDarkNight">#142d26</color>
-    <color name="colorAccentNight">#FFFFFF</color>
-    <color name="colorPrimary">#0325D3</color>
-    <color name="colorPrimaryDark">#0344C6</color>
+    <color name="colorAccentNight">#D8D5D5</color>
+    <color name="colorPrimary">#F4F4F6</color>
+    <color name="colorPrimaryDark">#ACACAC</color>
     <color name="colorAccent">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#272424</color>
 </resources>

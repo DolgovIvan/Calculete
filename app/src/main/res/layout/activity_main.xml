@@ -8,6 +8,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/inputTextView"
+        style="@style/TextView"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/input_height"
         android:gravity="bottom|end"
