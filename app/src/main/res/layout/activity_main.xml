@@ -219,16 +219,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/barrierhor" />
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/theme"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSettings"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="@dimen/width"
         android:layout_height="@dimen/height"
-        android:text="@string/theme_mode"
-        android:textSize="@dimen/textSizeSwitch"
+        android:text="@string/setings"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/barrierver"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/barrierver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDecimal" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierhor"

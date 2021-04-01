@@ -1,27 +1,21 @@
 package com.dolgov.calculate;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.DeadObjectException;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
 
 import java.text.DecimalFormat;
 
+import static java.lang.Double.parseDouble;
 
-public class MainActivity<e> extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
-    public static final String PREFERENCES = "nightPreferences";
-    public static final String KEY_THEME = "night";
     private static final String INPUT_TEXT_VIEW = "inputTextView";
     private static final String VALUE_ONE = "valueOne";
     private static final String VALUE_TWO = "valueTwo";
@@ -30,27 +24,32 @@ public class MainActivity<e> extends AppCompatActivity {
     private static final char MINUS = '-';
     private static final char MULTIPLY = '*';
     private static final char DIVIDE = '/';
-    private char ACTION;
+    private char actionnull = 0;
+    private char action = actionnull;
+
     SharedPreferences sharedPreferences;
 
-    private double valueOne = Double.NaN;
-    private double valueTwo = Double.NaN;
-    private String result = "";
+    private double value = 0.0;
+    private Double valueOne = value;
+    private Double valueTwo = value;
+    private String result;
 
     private DecimalFormat decimalFormat;
     private TextView inputTextView;
-    private SwitchCompat theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sharedPreferences = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 
-        decimalFormat = new DecimalFormat("#.##########");
+
+        sharedPreferences = getSharedPreferences(SettingsActivity.PREFERENCES, Context.MODE_PRIVATE);
+
+        decimalFormat = new DecimalFormat("#.######");
+
+        checkNightModeActivated();
 
         inputTextView = findViewById(R.id.inputTextView);
-        theme = findViewById(R.id.theme);
         Button btn0 = findViewById(R.id.btn0);
         Button btn1 = findViewById(R.id.btn1);
         Button btn2 = findViewById(R.id.btn2);
@@ -68,6 +67,7 @@ public class MainActivity<e> extends AppCompatActivity {
         Button btnPlus = findViewById(R.id.btnPlus);
         Button btnEquals = findViewById(R.id.btnEquals);
         Button btnClear = findViewById(R.id.btnClear);
+        Button btnSettings = findViewById(R.id.btnSettings);
 
         btn0.setOnClickListener(this::onClick);
         btn1.setOnClickListener(this::onClick);
@@ -86,54 +86,38 @@ public class MainActivity<e> extends AppCompatActivity {
         btnPlus.setOnClickListener(this::onClick);
         btnEquals.setOnClickListener(this::onClick);
         btnClear.setOnClickListener(this::onClick);
+        btnSettings.setOnClickListener(this::onClick);
 
-        checkNightModeActivated();
-
-        theme.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                saveNightModeState(true);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                saveNightModeState(false);
-            }
-            recreate();
-        });
-    }
-
-    private void saveNightModeState(boolean nightMode) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(KEY_THEME, nightMode).apply();
+        Intent intent2 = getIntent();
+        Bundle bundle = intent2.getExtras();
+        if (bundle==null){
+            return;
+        }
     }
 
     public void checkNightModeActivated() {
-        if (sharedPreferences.getBoolean(KEY_THEME, false)) {
-            theme.setChecked(true);
+        if (sharedPreferences.getBoolean(SettingsActivity.KEY_THEME, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            theme.setText("Темная тема");
         } else {
-            theme.setChecked(false);
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            theme.setText("Светлая тема");
         }
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(INPUT_TEXT_VIEW, inputTextView.getText().toString());
-        outState.putString(VALUE_ONE, String.valueOf(valueOne));
-        outState.putString(VALUE_TWO, String.valueOf(valueTwo));
+        outState.putDouble(VALUE_ONE, valueOne);
+        outState.putDouble(VALUE_TWO, valueTwo);
         outState.putString(RESULT, result);
-        //outState.putString(ACTION);
     }
 
     @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         inputTextView.setText(savedInstanceState.getString(INPUT_TEXT_VIEW));
-        valueOne = Double.parseDouble(savedInstanceState.getString(VALUE_ONE));
-        valueTwo = Double.parseDouble(savedInstanceState.getString(VALUE_TWO));
+        valueOne = savedInstanceState.getDouble(VALUE_ONE);
+        valueTwo = savedInstanceState.getDouble(VALUE_TWO);
         result = savedInstanceState.getString(RESULT);
     }
 
@@ -171,64 +155,69 @@ public class MainActivity<e> extends AppCompatActivity {
                 inputTextView.setText(inputTextView.getText() + "9");
                 break;
             case R.id.btnDecimal:
-                inputTextView.setText(inputTextView.getText() + ".");
+                if (inputTextView.getText().toString().contains(".")) {
+                    inputTextView.setText(inputTextView.getText() + ".");
+                }
                 break;
             case R.id.btnDivide:
-                ACTION = DIVIDE;
-                Calculation();
+                action = DIVIDE;
+                сalculation();
                 result = valueOne + "/";
                 inputTextView.setText(null);
                 break;
             case R.id.btnMultiply:
-                ACTION = MULTIPLY;
-                Calculation();
+                action = MULTIPLY;
+                сalculation();
                 result = valueOne + "*";
                 inputTextView.setText(null);
                 break;
             case R.id.btnMinus:
-                ACTION = MINUS;
-                Calculation();
-                result = valueOne+ "-";
+                action = MINUS;
+                сalculation();
+                result = valueOne + "-";
                 inputTextView.setText(null);
                 break;
             case R.id.btnPlus:
-                ACTION = PLUS;
-                Calculation();
+                action = PLUS;
+                сalculation();
                 result = valueOne + "+";
                 inputTextView.setText(null);
                 break;
             case R.id.btnEquals:
-                Calculation();
+                сalculation();
                 result = result + decimalFormat.format(valueTwo) + "=" + decimalFormat.format(valueOne);
                 inputTextView.setText(result);
-                valueOne = Double.NaN;
-                ACTION = '0';
+                valueOne = value;
+                action = actionnull;
                 break;
             case R.id.btnClear:
                 inputTextView.setText("");
-                valueOne = Double.NaN;
-                valueTwo = Double.NaN;
-                ACTION = '0';
+                valueOne = value;
+                valueTwo = value;
+                action = actionnull;
+                break;
+            case R.id.btnSettings:
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivityForResult(intent, RESULT_OK);
                 break;
         }
     }
 
     //Операции калькулятора
-    private void Calculation() {
-        if (!Double.isNaN(valueOne)) {
-            valueTwo = Double.parseDouble(inputTextView.getText().toString());
-            inputTextView.setText(null);
-            if (ACTION == PLUS) {
+    private void сalculation() {
+        if (valueOne == 0) {
+            valueOne = parseDouble(inputTextView.getText().toString());
+        } else {
+            valueTwo = parseDouble(inputTextView.getText().toString());
+            if (action == PLUS) {
                 valueOne = valueOne + valueTwo;
-            } else if (ACTION == MINUS) {
+            } else if (action == MINUS) {
                 valueOne = valueOne - valueTwo;
-            } else if (ACTION == MULTIPLY) {
+            } else if (action == MULTIPLY) {
                 valueOne = valueOne * valueTwo;
-            } else if (ACTION == DIVIDE) {
+            } else if (action == DIVIDE) {
                 valueOne = valueOne / valueTwo;
             }
-        } else {
-            valueOne = Double.parseDouble(inputTextView.getText().toString());
         }
     }
 }
